@@ -54,7 +54,7 @@ func loadRepository() {
 		providers.NewIndianUniversitiesProvider(),
         providers.NewWorldUniversitiesProvider(),
         //
-        // Add your own custom `InstitutionProvider` instance here.
+        // Add your own `InstitutionProvider` instance here.
         //
 	)
 	if err := r.Load(); err != nil {
@@ -67,7 +67,7 @@ To faciliate additional JSON files a helper `jSONProvder` can be used. More on t
 
 ## Deployment
 * [Up](https://up.docs.apex.sh/) can be used to quickly deploy our API as an AWS Lambda function.
-* Run `./scripts/deploy-staging.sh` to deploy staging version of our API to `https://staging-apis.musalleen.com` and `scripts/deploy.sh` to deploy the production version to `https://apis.musalleeb.com`. Custom domain name  and API Gateway are already configured inside AWS. Proper AWS credentials for Musalleen are injected automatically.
+* Run `./scripts/deploy-staging.sh` to deploy staging version of our API to `https://staging-apis.musalleen.com` and `scripts/deploy.sh` to deploy the production version to `https://apis.musalleen.com`. Custom domain name  and API Gateway are already configured inside AWS. Proper AWS credentials for Musalleen are injected automatically.
 
 ## License.
 Unlicensed.

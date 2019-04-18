@@ -25,9 +25,13 @@ func main() {
 
 func loadRepository() {
 	r = institutions.NewInstitutionRepository(
+		// Exisiting providers
 		providers.NewIndianCollegesProvider(),
 		providers.NewIndianUniversitiesProvider(),
 		providers.NewWorldUniversitiesProvider(),
+		//
+		// Add your own `InstitutionProvider` instance here.
+		//
 	)
 	if err := r.Load(); err != nil {
 		log.Fatal(err)

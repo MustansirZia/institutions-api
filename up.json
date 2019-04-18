@@ -1,0 +1,7 @@
+{
+  "name": "musalleen-apis",
+  "lambda": {
+    "memory": 1024
+  },
+  "regions": ["ap-south-1"]
+}

@@ -4,7 +4,7 @@
 
 https://apis.musalleen.com
 
-These should essentially be stateless and quick to cold start. This ensures they can be used in serverless or faaS enviroments such as AWS Lambda. The APIs are RESTful and are exposed via a single lambda function. 
+These should essentially be stateless and quick to cold start. This ensures they can be scaled infinitely and used in serverless or faaS enviroments such as AWS Lambda. The APIs are RESTful and are exposed via a single lambda function. 
 
 The APIs are written in [Golang (1.12)](https://golang.org/) and [fasthttp](https://github.com/valyala/fasthttp) as a [GO module](https://blog.golang.org/using-go-modules).
 

@@ -19,8 +19,10 @@ func main() {
 	mux := newMux()
 	addr := ":" + getPort()
 
-	fmt.Printf("Listening on %s!\n", addr)
-	fasthttp.ListenAndServe(addr, mux)
+	fmt.Printf("About to listen on %s!\n", addr)
+	if err := fasthttp.ListenAndServe(addr, mux); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func loadRepository() {
@@ -60,11 +62,12 @@ func newMux() fasthttp.RequestHandler {
 func handleInstitutionSearch(ctx *fasthttp.RequestCtx) {
 	name := ctx.QueryArgs().Peek("name")
 	if len(name) == 0 {
-		ctx.Error("query param \"name\" is missing. Please try again.", fasthttp.StatusNotFound)
+		ctx.Error("query param \"name\" is missing. Please try again.", fasthttp.StatusBadRequest)
 		return
 	}
 	count, err := ctx.QueryArgs().GetUint("count")
 	if err != nil {
+		// Default count is 10.
 		count = 10
 	}
 	institutions := r.GetInstitutions(string(name), count)

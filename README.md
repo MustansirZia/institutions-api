@@ -1,4 +1,4 @@
-# musalleen-apis
+    # musalleen-apis
 
 > A set of commonly used APIs in Musalleen and it's other projects. 
 
@@ -49,13 +49,11 @@ Here's the `loadRepository` function inside `main.go`.
 ```go
 func loadRepository() {
 	r = institutions.NewInstitutionRepository(
-        // Exisiting providers
-        providers.NewIndianCollegesProvider(),
-        providers.NewIndianUniversitiesProvider(),
-        providers.NewWorldUniversitiesProvider(),
-        //
-        // Add your own `InstitutionProvider` instance here.
-        //
+          // Exisiting providers
+          providers.NewIndianCollegesProvider(),
+          providers.NewIndianUniversitiesProvider(),
+          providers.NewWorldUniversitiesProvider(),
+          // Add your own `InstitutionProvider` instance here.
 	)
 	if err := r.Load(); err != nil {
 		log.Fatal(err)

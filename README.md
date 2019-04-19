@@ -50,8 +50,8 @@ Here's the `loadRepository` function inside `main.go`.
 func loadRepository() {
 	r = institutions.NewInstitutionRepository(
         // Exisiting providers
-		providers.NewIndianCollegesProvider(),
-		providers.NewIndianUniversitiesProvider(),
+	  	  providers.NewIndianCollegesProvider(),
+		    providers.NewIndianUniversitiesProvider(),
         providers.NewWorldUniversitiesProvider(),
         //
         // Add your own `InstitutionProvider` instance here.

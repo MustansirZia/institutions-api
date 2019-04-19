@@ -5,6 +5,7 @@ import (
 
 	"github.com/derekparker/trie"
 	"github.com/qazimusab/musalleen-apis/institutions/providers"
+	"golang.org/x/sync/errgroup"
 )
 
 type InstitutionRepository interface {
@@ -25,14 +26,33 @@ func NewInstitutionRepository(providers ...providers.InstitutionProvider) Instit
 }
 
 func (r *institutionRepository) Load() error {
+	routineGroup := errgroup.Group{}
 	for _, provider := range r.providers {
-		institutions, err := provider.Provide()
-		if err != nil {
-			return err
-		}
-		r.addInstitutionsToTrie(institutions)
+		// Extracting institutions from each provider concurrently.
+		currentProvider := provider
+		routineGroup.Go(func() error {
+			institutions, err := currentProvider.Provide()
+			if err != nil {
+				return err
+			}
+			r.addInstitutionsToTrie(institutions)
+			return nil
+		})
 	}
-	return nil
+	// Waiting for the extraction to finish.
+	return routineGroup.Wait()
+}
+
+func (r *institutionRepository) addInstitutionsToTrie(institutions []string) {
+	for _, institution := range institutions {
+		r.trie.Add(strings.ToLower(institution), institution)
+		split := strings.Split(institution, " ")
+		if len(split) > 1 {
+			for _, split := range split[1:] {
+				r.trie.Add(strings.ToLower(split), institution)
+			}
+		}
+	}
 }
 
 func (r *institutionRepository) GetInstitutions(name string, count int) []string {
@@ -48,16 +68,4 @@ func (r *institutionRepository) GetInstitutions(name string, count int) []string
 		}
 	}
 	return institutions
-}
-
-func (r *institutionRepository) addInstitutionsToTrie(institutions []string) {
-	for _, institution := range institutions {
-		r.trie.Add(strings.ToLower(institution), institution)
-		split := strings.Split(institution, " ")
-		if len(split) > 1 {
-			for _, split := range split[1:] {
-				r.trie.Add(strings.ToLower(split), institution)
-			}
-		}
-	}
 }

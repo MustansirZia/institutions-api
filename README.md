@@ -35,7 +35,7 @@ To search for all Indian colleges and univeristies around the world.
 
 * `git clone git@github.com:qazimusab/musalleen-apis && cd musalleen-apis`.
 * Run this once `go mod verify`.
-* To start server locally. `go run main.go`. Server is now live on `localhost:5000`. First time around might take a while till all the third party libraries are download. After that the startup time is around ~2-3 seconds even taking into account all this data. <3
+* To start server locally. `go run main.go`. Server is now live on `localhost:5000`. First time around might take a while till all the third party libraries are download. After that the startup time is around ~1 second even taking into account all this data. ❤️
 
 ## Codebase
 The data for the institution API is loaded into memory on each cold start via JSON files located in `data/json/*.json`. For now there are only three files which hold all the college and university data. Data can however come from any other source too as we will see shortly. 

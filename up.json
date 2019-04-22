@@ -1,7 +1,7 @@
 {
   "name": "musalleen-apis",
   "lambda": {
-    "memory": 1024
+    "memory": 2048
   },
   "regions": ["ap-south-1"],
   "error_pages": {

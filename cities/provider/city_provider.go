@@ -30,11 +30,11 @@ func (p *jsonCityProvider) Provide() ([]City, error) {
 		statesMap, ok := country["states"].(map[string]interface{})
 		if ok {
 			for state, citiesOfAState := range statesMap {
-				for _, city := range citiesOfAState.([]string) {
+				for _, city := range citiesOfAState.([]interface{}) {
 					citiesSlice = append(citiesSlice, City{
 						Country: country["name"].(string),
 						State:   state,
-						Name:    city,
+						Name:    city.(string),
 					})
 				}
 			}

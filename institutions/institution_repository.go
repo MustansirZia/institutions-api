@@ -18,9 +18,9 @@ type institutionRepository struct {
 	once      sync.Once
 }
 
-func NewInstitutionRepository(providers ...providers.InstitutionProvider) InstitutionRepository {
+func NewInstitutionRepository(provider providers.InstitutionProvider, providers ...providers.InstitutionProvider) InstitutionRepository {
 	return &institutionRepository{
-		providers: providers,
+		providers: append(providers, provider),
 		trie:      trie.NewTrie(),
 		once:      sync.Once{},
 	}

@@ -5,18 +5,18 @@ import (
 	"log"
 	"os"
 
+	"github.com/qazimusab/musalleen-apis/cities"
+	"github.com/qazimusab/musalleen-apis/states"
+
 	"github.com/qazimusab/musalleen-apis/countries"
 
 	"github.com/qazimusab/musalleen-apis/institutions"
-	statesProvider "github.com/qazimusab/musalleen-apis/states/provider"
 	"github.com/valyala/fasthttp"
 )
 
 var r institutions.InstitutionRepository
 
 func main() {
-	// fmt.Println(provider.NewJSONCountryProvider().Provide())
-	fmt.Println(statesProvider.NewJSONStateProvider().Provide())
 
 	mux := newMux()
 	addr := ":" + getPort()
@@ -42,6 +42,12 @@ func newMux() fasthttp.RequestHandler {
 			institutions.ServeHTTP(ctx)
 		case "/countries":
 			countries.ServeHTTP(ctx)
+		case "/states":
+			states.ServeHTTP(ctx)
+		case "/cities/by-state":
+			cities.ServeHTTPByState(ctx)
+		case "/cities/by-name":
+			cities.ServeHTTPByName(ctx)
 		default:
 			ctx.Error("NOT FOUND", fasthttp.StatusNotFound)
 		}

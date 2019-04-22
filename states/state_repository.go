@@ -1,6 +1,7 @@
 package states
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 	"sync"
@@ -10,7 +11,7 @@ import (
 )
 
 type StateRepository interface {
-	GetStates(country string) ([]provider.State, error)
+	GetStates(country string) ([]string, error)
 }
 
 type stateRepository struct {
@@ -38,11 +39,11 @@ func (r *stateRepository) load() error {
 
 func (r *stateRepository) addStatesToTrie(states []provider.State) {
 	for _, state := range states {
-		r.trie.AddValue(state.String(), state)
+		r.trie.AddValue(fmt.Sprintf("%s, %s", state.Country, state.Name), state)
 	}
 }
 
-func (r *stateRepository) GetStates(country string) ([]provider.State, error) {
+func (r *stateRepository) GetStates(country string) ([]string, error) {
 
 	var err error
 	r.once.Do(func() {
@@ -52,13 +53,13 @@ func (r *stateRepository) GetStates(country string) ([]provider.State, error) {
 		return nil, err
 	}
 
-	results := r.trie.PrefixSearch(country, -1)
-	states := make([]provider.State, 0, len(results))
+	results := r.trie.PrefixSearch(fmt.Sprintf("%s,", country), -1)
+	states := make([]string, 0, len(results))
 	for _, result := range results {
-		states = append(states, result.(provider.State))
+		states = append(states, result.(provider.State).Name)
 	}
-	sort.Slice(states, func(i, j int) bool {
-		return strings.Compare(states[i].Name, states[j].Name) > 1
+	sort.SliceStable(states, func(i, j int) bool {
+		return strings.Compare(states[i], states[j]) < 0
 	})
 
 	return states, nil

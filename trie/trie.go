@@ -1,10 +1,12 @@
 package trie
 
 import (
+	"math/rand"
 	"strings"
 
 	originalTrie "github.com/derekparker/trie"
 	"github.com/qazimusab/musalleen-apis/set"
+	uuid "github.com/satori/go.uuid"
 )
 
 type Trie interface {
@@ -15,11 +17,13 @@ type Trie interface {
 
 type trie struct {
 	originalTrie *originalTrie.Trie
+	uuidPool     []string
 }
 
 func NewTrie() Trie {
 	return &trie{
 		originalTrie: originalTrie.New(),
+		uuidPool:     generateUUIDS(10),
 	}
 }
 
@@ -51,6 +55,7 @@ func (t *trie) AddValue(key string, value interface{}) {
 	wordsInKey := strings.Split(key, " ")
 	if len(wordsInKey) > 1 {
 		for _, word := range wordsInKey[1:] {
+			word += t.getUUID()
 			t.originalTrie.Add(strings.ToLower(word), value)
 		}
 	}
@@ -68,4 +73,17 @@ func (t *trie) GetAllValues() []interface{} {
 	}
 
 	return set.Values()
+}
+
+func (t *trie) getUUID() string {
+	index := rand.Intn(len(t.uuidPool) - 1)
+	return t.uuidPool[index]
+}
+
+func generateUUIDS(count int) []string {
+	uuids := make([]string, 0, count)
+	for i := 0; i < count; i++ {
+		uuids = append(uuids, uuid.NewV1().String())
+	}
+	return uuids
 }

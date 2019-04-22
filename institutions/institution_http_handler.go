@@ -4,14 +4,22 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"time"
+
+	"github.com/qazimusab/musalleen-apis/institutions/providers"
 
 	"github.com/valyala/fasthttp"
 )
 
 var r InstitutionRepository
+var r2 InstitutionRepository
 
 func init() {
-	r = NewInstitutionRepository()
+	r = NewInstitutionRepository(
+		providers.NewIndianCollegesProvider(),
+		providers.NewWorldUniversitiesProvider(),
+		providers.NewIndianUniversitiesProvider(),
+	)
 }
 
 func ServeHTTP(ctx *fasthttp.RequestCtx) {
@@ -20,6 +28,7 @@ func ServeHTTP(ctx *fasthttp.RequestCtx) {
 		ctx.Error("query param \"name\" is missing. Please try again.", fasthttp.StatusBadRequest)
 		return
 	}
+	t := time.Now().Unix()
 	count, err := ctx.QueryArgs().GetUint("count")
 	if err != nil {
 		// Default count is 10.
@@ -31,6 +40,7 @@ func ServeHTTP(ctx *fasthttp.RequestCtx) {
 		ctx.Error("Oops! Something bad happened.", fasthttp.StatusInternalServerError)
 		return
 	}
+	fmt.Println(time.Now().Unix() - t)
 	ctx.Response.Header.SetContentType("application/json")
 	if err := json.NewEncoder(ctx).Encode(institutions); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())

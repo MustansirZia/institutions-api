@@ -57,8 +57,8 @@ func (r *countryRepository) GetAllCountries() ([]string, error) {
 		countries = append(countries, result.(string))
 	}
 
-	sort.Slice(countries, func(i, j int) bool {
-		return strings.Compare(countries[i], countries[j]) > 1
+	sort.SliceStable(countries, func(i, j int) bool {
+		return strings.Compare(countries[i], countries[j]) < 1
 	})
 
 	return countries, nil

@@ -1,6 +1,7 @@
 package cities
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 	"sync"
@@ -11,7 +12,8 @@ import (
 )
 
 type CityRepository interface {
-	GetCities(name, state string) ([]provider.City, error)
+	GetCitiesByName(name string) ([]provider.City, error)
+	GetCitiesByState(state string) ([]string, error)
 }
 
 type cityRepository struct {
@@ -39,11 +41,31 @@ func (r *cityRepository) load() error {
 
 func (r *cityRepository) addCitiesToTrie(cities []provider.City) {
 	for _, city := range cities {
-		r.trie.AddValue(city.String(), city)
+		r.trie.AddValue(fmt.Sprintf("%s, %s", city.State, city.Name), city)
 	}
 }
 
-func (r *cityRepository) GetCities(name, state string) ([]provider.City, error) {
+func (r *cityRepository) GetCitiesByName(name string) ([]provider.City, error) {
+	cities, err := r.getCities(&name, nil)
+	if err != nil {
+		return nil, err
+	}
+	return cities, nil
+}
+
+func (r *cityRepository) GetCitiesByState(state string) ([]string, error) {
+	cities, err := r.getCities(nil, &state)
+	if err != nil {
+		return nil, err
+	}
+	citiesAsStrings := make([]string, 0, len(cities))
+	for _, city := range cities {
+		citiesAsStrings = append(citiesAsStrings, city.Name)
+	}
+	return citiesAsStrings, nil
+}
+
+func (r *cityRepository) getCities(name, state *string) ([]provider.City, error) {
 
 	var err error
 	r.once.Do(func() {
@@ -55,14 +77,18 @@ func (r *cityRepository) GetCities(name, state string) ([]provider.City, error) 
 
 	citiesSet := set.NewSet()
 
-	resultsForState := r.trie.PrefixSearch(state, -1)
-	for _, result := range resultsForState {
-		citiesSet.Add(result.(provider.City))
+	if state != nil {
+		resultsForState := r.trie.PrefixSearch(*state, -1)
+		for _, result := range resultsForState {
+			citiesSet.Add(result.(provider.City))
+		}
 	}
 
-	resultsForName := r.trie.PrefixSearch(name, -1)
-	for _, result := range resultsForName {
-		citiesSet.Add(result.(provider.City))
+	if name != nil {
+		resultsForName := r.trie.PrefixSearch(*name, -1)
+		for _, result := range resultsForName {
+			citiesSet.Add(result.(provider.City))
+		}
 	}
 
 	citiesGeneric := citiesSet.Values()
@@ -72,8 +98,8 @@ func (r *cityRepository) GetCities(name, state string) ([]provider.City, error) 
 		cities = append(cities, city.(provider.City))
 	}
 
-	sort.Slice(cities, func(i, j int) bool {
-		return strings.Compare(cities[i].Name, cities[j].Name) > 1
+	sort.SliceStable(cities, func(i, j int) bool {
+		return strings.Compare(cities[i].Name, cities[j].Name) < 0
 	})
 
 	return cities, nil

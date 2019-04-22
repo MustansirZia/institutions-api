@@ -23,7 +23,7 @@ type trie struct {
 func NewTrie() Trie {
 	return &trie{
 		originalTrie: originalTrie.New(),
-		uuidPool:     generateUUIDS(10),
+		uuidPool:     generateUUIDS(20),
 	}
 }
 

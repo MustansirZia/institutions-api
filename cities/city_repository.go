@@ -12,7 +12,7 @@ import (
 )
 
 type CityRepository interface {
-	GetCitiesByName(name string) ([]provider.City, error)
+	GetCitiesByName(name string) ([]string, error)
 	GetCitiesByState(state string) ([]string, error)
 }
 
@@ -45,12 +45,16 @@ func (r *cityRepository) addCitiesToTrie(cities []provider.City) {
 	}
 }
 
-func (r *cityRepository) GetCitiesByName(name string) ([]provider.City, error) {
+func (r *cityRepository) GetCitiesByName(name string) ([]string, error) {
 	cities, err := r.getCities(&name, nil)
 	if err != nil {
 		return nil, err
 	}
-	return cities, nil
+	citiesAsStrings := make([]string, 0, len(cities))
+	for _, city := range cities {
+		citiesAsStrings = append(citiesAsStrings, city.String())
+	}
+	return citiesAsStrings, nil
 }
 
 func (r *cityRepository) GetCitiesByState(state string) ([]string, error) {
@@ -99,7 +103,7 @@ func (r *cityRepository) getCities(name, state *string) ([]provider.City, error)
 	}
 
 	sort.SliceStable(cities, func(i, j int) bool {
-		return strings.Compare(cities[i].Name, cities[j].Name) < 0
+		return strings.Compare(cities[i].String(), cities[j].String()) < 0
 	})
 
 	return cities, nil

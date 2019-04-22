@@ -8,12 +8,15 @@ import (
 
 	"github.com/qazimusab/musalleen-apis/institutions"
 	"github.com/qazimusab/musalleen-apis/institutions/providers"
+	statesProvider "github.com/qazimusab/musalleen-apis/states/provider"
 	"github.com/valyala/fasthttp"
 )
 
 var r institutions.InstitutionRepository
 
 func main() {
+	// fmt.Println(provider.NewJSONCountryProvider().Provide())
+	fmt.Println(statesProvider.NewJSONStateProvider().Provide())
 	loadRepository()
 
 	mux := newMux()
@@ -31,9 +34,7 @@ func loadRepository() {
 		providers.NewIndianCollegesProvider(),
 		providers.NewIndianUniversitiesProvider(),
 		providers.NewWorldUniversitiesProvider(),
-		//
 		// Add your own `InstitutionProvider` instance here.
-		//
 	)
 	if err := r.Load(); err != nil {
 		log.Fatal(err)

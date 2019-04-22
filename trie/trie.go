@@ -29,7 +29,7 @@ func NewTrie() Trie {
 
 func (t *trie) PrefixSearch(pre string, count int) []interface{} {
 	results := make([]interface{}, 0)
-	nodes := t.originalTrie.PrefixSearch(strings.ToLower(pre))
+	nodes := t.originalTrie.PrefixSearch(normalizeKey(pre))
 	for i, k := range nodes {
 		value, found := t.findValue(k)
 		if found {
@@ -43,7 +43,7 @@ func (t *trie) PrefixSearch(pre string, count int) []interface{} {
 }
 
 func (t *trie) findValue(key string) (interface{}, bool) {
-	node, found := t.originalTrie.Find(strings.ToLower(key))
+	node, found := t.originalTrie.Find(key)
 	if !found {
 		return nil, false
 	}
@@ -51,12 +51,12 @@ func (t *trie) findValue(key string) (interface{}, bool) {
 }
 
 func (t *trie) AddValue(key string, value interface{}) {
-	t.originalTrie.Add(strings.ToLower(key), value)
+	t.originalTrie.Add(normalizeKey(key), value)
 	wordsInKey := strings.Split(key, " ")
 	if len(wordsInKey) > 1 {
 		for _, word := range wordsInKey[1:] {
-			word += t.getUUID()
-			t.originalTrie.Add(strings.ToLower(word), value)
+			word += t.getRandomUUID()
+			t.originalTrie.Add(normalizeKey(word), value)
 		}
 	}
 }
@@ -75,7 +75,7 @@ func (t *trie) GetAllValues() []interface{} {
 	return set.Values()
 }
 
-func (t *trie) getUUID() string {
+func (t *trie) getRandomUUID() string {
 	index := rand.Intn(len(t.uuidPool) - 1)
 	return t.uuidPool[index]
 }
@@ -86,4 +86,8 @@ func generateUUIDS(count int) []string {
 		uuids = append(uuids, uuid.NewV1().String())
 	}
 	return uuids
+}
+
+func normalizeKey(key string) string {
+	return strings.ToLower(strings.Trim(key))
 }

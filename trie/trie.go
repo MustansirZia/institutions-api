@@ -89,5 +89,5 @@ func generateUUIDS(count int) []string {
 }
 
 func normalizeKey(key string) string {
-	return strings.ToLower(strings.Trim(key))
+	return strings.ToLower(strings.Trim(key, " "))
 }

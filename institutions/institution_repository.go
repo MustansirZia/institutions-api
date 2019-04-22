@@ -1,29 +1,32 @@
 package institutions
 
 import (
+	"sync"
+
 	"github.com/qazimusab/musalleen-apis/institutions/providers"
 	"github.com/qazimusab/musalleen-apis/trie"
 	"golang.org/x/sync/errgroup"
 )
 
 type InstitutionRepository interface {
-	Load() error
-	GetInstitutions(name string, count int) []string
+	GetInstitutions(name string, count int) ([]string, error)
 }
 
 type institutionRepository struct {
 	providers []providers.InstitutionProvider
 	trie      trie.Trie
+	once      sync.Once
 }
 
 func NewInstitutionRepository(providers ...providers.InstitutionProvider) InstitutionRepository {
 	return &institutionRepository{
 		providers: providers,
 		trie:      trie.NewTrie(),
+		once:      sync.Once{},
 	}
 }
 
-func (r *institutionRepository) Load() error {
+func (r *institutionRepository) load() error {
 	routineGroup := errgroup.Group{}
 	for _, provider := range r.providers {
 		// Extracting institutions from each provider concurrently.
@@ -47,11 +50,19 @@ func (r *institutionRepository) addInstitutionsToTrie(institutions []string) {
 	}
 }
 
-func (r *institutionRepository) GetInstitutions(name string, count int) []string {
+func (r *institutionRepository) GetInstitutions(name string, count int) ([]string, error) {
+	var err error
+	r.once.Do(func() {
+		err = r.load()
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	results := r.trie.PrefixSearch(name, count)
 	institutions := make([]string, 0, len(results))
 	for _, result := range results {
 		institutions = append(institutions, result.(string))
 	}
-	return institutions
+	return institutions, nil
 }

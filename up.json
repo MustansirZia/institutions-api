@@ -1,10 +1,13 @@
 {
   "name": "musalleen-apis",
   "lambda": {
-    "memory": 2048
+    "memory": 2560
   },
   "regions": ["ap-south-1"],
   "error_pages": {
     "disable": true
+  },
+  "proxy": {
+    "timeout": 25
   }
 }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-
 	"github.com/qazimusab/musalleen-apis/cities"
 	"github.com/qazimusab/musalleen-apis/states"
 

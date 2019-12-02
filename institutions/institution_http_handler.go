@@ -11,7 +11,6 @@ import (
 )
 
 var repository InstitutionRepository
-var r2 InstitutionRepository
 
 func init() {
 	repository = NewInstitutionRepository(

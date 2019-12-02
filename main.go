@@ -9,8 +9,6 @@ import (
 	"github.com/mustansirzia/institutions-api/institutions"
 )
 
-var r institutions.InstitutionRepository
-
 func main() {
 
 	addr := ":" + getPort()

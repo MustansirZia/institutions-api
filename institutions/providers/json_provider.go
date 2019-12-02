@@ -25,13 +25,11 @@ func (p *jsonProvider) Provide() ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	data := make([]map[string]interface{}, 0)
 	err = json.Unmarshal(bytes, &data)
 	if err != nil {
 		return nil, err
 	}
-
 	institutions := make([]string, 0, len(data))
 	for _, institution := range data {
 		institutions = append(institutions, p.extractor(institution))

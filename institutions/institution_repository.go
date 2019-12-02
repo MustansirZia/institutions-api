@@ -58,7 +58,6 @@ func (r *institutionRepository) GetInstitutions(name string, count int) ([]strin
 	if err != nil {
 		return nil, err
 	}
-
 	results := r.trie.PrefixSearch(name, count)
 	institutions := make([]string, 0, len(results))
 	for _, result := range results {

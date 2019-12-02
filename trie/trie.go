@@ -63,7 +63,6 @@ func (t *trie) AddValue(key string, value interface{}) {
 
 func (t *trie) GetAllValues() []interface{} {
 	set := set.NewSet()
-
 	keys := t.originalTrie.Keys()
 	for _, key := range keys {
 		value, found := t.findValue(key)
@@ -71,7 +70,6 @@ func (t *trie) GetAllValues() []interface{} {
 			set.Add(value)
 		}
 	}
-
 	return set.Values()
 }
 

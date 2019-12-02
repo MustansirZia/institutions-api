@@ -3,8 +3,8 @@ package institutions
 import (
 	"sync"
 
-	"github.com/qazimusab/musalleen-apis/institutions/providers"
-	"github.com/qazimusab/musalleen-apis/trie"
+	"github.com/mustansirzia/institutions-api/institutions/providers"
+	"github.com/mustansirzia/institutions-api/trie"
 	"golang.org/x/sync/errgroup"
 )
 

@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	originalTrie "github.com/derekparker/trie"
-	"github.com/qazimusab/musalleen-apis/set"
+	"github.com/mustansirzia/institutions-api/set"
 	uuid "github.com/satori/go.uuid"
 )
 

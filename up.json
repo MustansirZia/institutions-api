@@ -1,9 +1,8 @@
 {
-  "name": "musalleen-apis",
+  "name": "institutions-api",
   "lambda": {
     "memory": 2560
   },
-  "regions": ["ap-south-1"],
   "error_pages": {
     "disable": true
   },

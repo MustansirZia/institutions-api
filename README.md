@@ -1,5 +1,6 @@
 # institutions-api
 
+[![GitHub tag](https://img.shields.io/github/tag/MustansirZia/institutions-api.svg?style=flat)](https://github.com/MustansirZia/institutions-api/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/MustansirZia/institutions-api)](https://goreportcard.com/report/github.com/MustansirZia/institutions-api)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 

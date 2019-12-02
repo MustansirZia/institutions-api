@@ -16,7 +16,8 @@ It can act as a backend service for an autocomplete input that searches for all 
 * Run this once `go mod verify`.
 * To start server locally. `go run main.go`. Now hit the HTTP endpoint at http://localhost:5000/institutions`.
 * To install `go install`. Then run `institutions-api`.
-* Can even be used as a library. `go get github.com/MustansirZia/institutions-api`.
+* Can even be used as a library. ❤️ <br /> 
+First do `go get github.com/MustansirZia/institutions-api`.
 Then import in your own GO project like so:
 ```go
     import "github.com/mustansirzia/institutions-api/institutions"

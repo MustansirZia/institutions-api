@@ -47,7 +47,8 @@ This makes it fairly easy to add a new colleges and universities by adding anoth
 Here's the `init` function inside `institutions/institutions_http_handler.go`.
 
 ```go
-func loadRepository() {
+// institutions/institutions_http_handler.go file.
+func init() {
 	r = institutions.NewInstitutionRepository(
           // Exisiting providers
           providers.NewIndianCollegesProvider(),
@@ -55,9 +56,6 @@ func loadRepository() {
           providers.NewWorldUniversitiesProvider(),
           // Add your own `InstitutionProvider` instance here.
 	)
-	if err := r.Load(); err != nil {
-		log.Fatal(err)
-	}
 }
 ```
 

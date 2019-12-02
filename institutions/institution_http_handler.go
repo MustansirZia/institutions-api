@@ -14,9 +14,11 @@ var repository InstitutionRepository
 
 func init() {
 	repository = NewInstitutionRepository(
+		// Exisiting providers
 		providers.NewIndianCollegesProvider(),
 		providers.NewWorldUniversitiesProvider(),
 		providers.NewIndianUniversitiesProvider(),
+		// Add your own `InstitutionProvider` instance here.
 	)
 }
 

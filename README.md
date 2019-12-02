@@ -1,4 +1,4 @@
-    # institutions-api
+# institutions-api
 
 > A RESTful API to query all colleges in India, universities in India and all international universities around the world using their name, a prefix of their name or any part of their name. This is not a wrapper over any third party service or dependency but instead houses all the data within itself and can act as a standalone microservice.
 

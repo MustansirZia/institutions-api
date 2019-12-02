@@ -17,7 +17,7 @@ It can act as a backend service for an autocomplete input that searches for all 
 To search for all Indian colleges and universities around the world. As you can see the keyword
 can either be a prefix to a result or be somewhere inside the result itself. This more or less works like a text index.
 ```json
-GET /institution?search=Kashmir&count=10
+GET http://localhost:5000/institutions?search=Kashmir&count=10
 
 [
   "University of Kashmir, Srinagar",

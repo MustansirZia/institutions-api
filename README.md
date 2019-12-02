@@ -41,18 +41,18 @@ The data for the institutions API is lazily loaded once into memory the first ti
 Data sources for colleges or universites actually come from something called providers or more specifically, implementations of an interface called `InstitutionProvider`. 
 The default set of providers are located inside `institutions/providers`.
 
-This makes it fairly easy to add a new colleges and universities by adding another data provider which implements the `InstitutionProvider` interface. We can then pass an instance of this newly made provider to the`institutions.NewInstitutionRepository` call inside `main.go`.
+This makes it fairly easy to add a new colleges and universities by adding another data provider which implements the `InstitutionProvider` interface. We can then pass an instance of this newly made provider to the`NewInstitutionRepository` call inside `institutions/institutions_http_handler.go`.
 Here's the `init` function inside `institutions/institutions_http_handler.go`.
 
 ```go
 // institutions/institutions_http_handler.go file.
 func init() {
-	r = institutions.NewInstitutionRepository(
-          // Exisiting providers
-          providers.NewIndianCollegesProvider(),
-          providers.NewIndianUniversitiesProvider(),
-          providers.NewWorldUniversitiesProvider(),
-          // Add your own `InstitutionProvider` instance here.
+	repository = NewInstitutionRepository(
+		// Exisiting providers
+		providers.NewIndianCollegesProvider(),
+		providers.NewWorldUniversitiesProvider(),
+		providers.NewIndianUniversitiesProvider(),
+		// Add your own `InstitutionProvider` instance here.
 	)
 }
 ```
@@ -101,7 +101,7 @@ Then import in your own GO project like so:
 * [Docker](https://up.docs.apex.sh/) is already configured for this repository. Tu run it inside a docker container use these commands.
 * `docker build . -t institutions-api`. 
 This will build the docker image and tag it as `institutions-api`. This does not need the Go runtime to be installed locally. Everything is first complied inside a golang base image container and then the executable is copied inside an alpine container which eventually runs.
-* `docker run -p 81:5000 institutions-api`. 
+* Start container using `docker run -p 81:5000 institutions-api`. 
 Point browser to `http://localhost:81/institutions` to get the ball rolling. 
 
 ### Serverless.

@@ -53,8 +53,8 @@ GET http://localhost:5000/institutions?name=Kashmir&count=10
   "KASHMIR LAW COLLEGE",
   "KASHMIR COLLEGE OF EDUCATION, BARAMULLAH",
   "Azad Jammu and Kashmir University",
-  ...
-  ...
+  // ...
+  // ...
 ]
 ```
 
@@ -86,16 +86,16 @@ This makes it fairly easy to add a new colleges and universities by adding anoth
 Here's the `init` function inside `institutions/institutions_http_handler.go`.
 
 ```go
-// institutions/institutions_http_handler.go file.
-func init() {
-	repository = NewInstitutionRepository(
-		// Exisiting providers
-		providers.NewIndianCollegesProvider(),
-		providers.NewWorldUniversitiesProvider(),
-		providers.NewIndianUniversitiesProvider(),
-		// Add your own `InstitutionProvider` instance here.
-	)
-}
+    // institutions/institutions_http_handler.go file.
+    func init() {
+	    repository = NewInstitutionRepository(
+		    // Exisiting providers
+		    providers.NewIndianCollegesProvider(),
+		    providers.NewWorldUniversitiesProvider(),
+		    providers.NewIndianUniversitiesProvider(),
+		    // Add your own `InstitutionProvider` instance here.
+	    )
+    }
 ```
 
 To faciliate additional JSON files a helper `jSONProvder` can be used. More on this inside `institutions/providers/json_provider.go`. All the three JSON files are loaded using this provider. 

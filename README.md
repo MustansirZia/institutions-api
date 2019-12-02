@@ -8,7 +8,32 @@
 ## Use case.
 It can act as a backend service for an autocomplete input that searches for all colleges in India, universities in India and accompanied by all international universities.
 
-<br />
+## Development.
+* Prerequisites. 
+    * Golang (1.12). https://golang.org
+* `git clone git@github.com:MustansirZia/institutions-api && cd institutions-api`.
+* Run this once `go mod verify`.
+* To start server locally. `go run main.go`. An HTTP Server is now live on `localhost:5000`.
+* To install `go install`. Then run `institutions-api`.
+* Can even be used as a library. `go get github.com/MustansirZia/institutions-api`.
+Then import in your own GO project like so:
+```go
+    import "github.com/mustansirzia/institutions-api/institutions"
+
+    func main() {	
+        repository = institutions.NewInstitutionRepository(
+            // Add the providers you need.
+            providers.NewIndianCollegesProvider(),
+            providers.NewWorldUniversitiesProvider(),
+            providers.NewIndianUniversitiesProvider(),
+        )
+        institutions, err := repository.GetInstitutions("Maryland", 10)
+        if err != nil {
+            log.Fatal(err)
+        }
+        fmt.Println(institutions)
+    }
+```
 
 ## API.
 
@@ -31,7 +56,21 @@ GET http://localhost:5000/institutions?search=Kashmir&count=10
 ]
 ```
 
-<br />
+## Deployment (Bonus)
+### Docker.
+* Prerequisites.
+    * Docker. https://docker.com.
+* [Docker](https://up.docs.apex.sh/) is already configured for this repository. Tu run it inside a docker container use these commands.
+* `docker build . -t institutions-api`. 
+This will build the docker image and tag it as `institutions-api`. This does not need the Go runtime to be installed locally. Everything is first complied inside a golang base image container and then the executable is copied inside an alpine container which eventually runs.
+* Start container using `docker run -p 81:5000 institutions-api`. 
+Point browser to `http://localhost:81/institutions` to get the ball rolling. 
+
+### Serverless.
+* Prerequisites.
+    * Up. https://up.docs.apex.sh.
+* [Up](https://up.docs.apex.sh/) can be used to quickly deploy this API as an AWS Lambda function.
+* While inside the project root, run `up` to deploy a version of our API to AWS Lambda. Proper AWS credentials for this to be configured for this though.
 
 ## Codebase
 The API is written in [Golang (1.12)](https://golang.org/) as a [GO module](https://blog.golang.org/using-go-modules).
@@ -62,55 +101,6 @@ To faciliate additional JSON files a helper `jSONProvder` can be used. More on t
 ### How the data is queried? 
 Data that's loaded inside the memory is stored in a data structure called `Trie`. Here's a Wikipedia [article](https://en.wikipedia.org/wiki/Trie) that describes Tries. A Trie stores data as key-value pairs in the form of interconnected nodes and leaves whose position is based on a key they are associated with. Each node has descendants which share a common string prefix. That prefix string is associated with that particular node and thus using a particular prefix key can be mapped to multiple values, in a way. This way a number of institutions can be queried using a common prefix. 
 This implementation can however be also used for a string that's located inside the name of the institution such as `Kashmir` which is inside `University of Kashmir`. Before storing an institution we split its name into its individual words and then store the same institution of over and over again for each of the words inside its name which act as keys. This way the institition can be queried by not only its prefix but also using any part of its name. 
-
-<br />
-
-## Development.
-* Prerequisites. 
-    * Golang (1.12). https://golang.org
-* `git clone git@github.com:MustansirZia/institutions-api && cd institutions-api`.
-* Run this once `go mod verify`.
-* To start server locally. `go run main.go`. An HTTP Server is now live on `localhost:5000`.
-* To install `go install`. Then run `institutions-api`.
-* Can even be used as a library. `go get github.com/MustansirZia/institutions-api`.
-Then import in your own GO project like so:
-```go
-    import "github.com/mustansirzia/institutions-api/institutions"
-
-    func main() {	
-        repository = institutions.NewInstitutionRepository(
-            // Add the providers you need.
-            providers.NewIndianCollegesProvider(),
-            providers.NewWorldUniversitiesProvider(),
-            providers.NewIndianUniversitiesProvider(),
-        )
-        institutions, err := repository.GetInstitutions("Maryland", 10)
-        if err != nil {
-            log.Fatal(err)
-        }
-        fmt.Println(institutions)
-    }
-```
-
-<br />
-
-## Deployment (Bonus)
-### Docker.
-* Prerequisites.
-    * Docker. https://docker.com.
-* [Docker](https://up.docs.apex.sh/) is already configured for this repository. Tu run it inside a docker container use these commands.
-* `docker build . -t institutions-api`. 
-This will build the docker image and tag it as `institutions-api`. This does not need the Go runtime to be installed locally. Everything is first complied inside a golang base image container and then the executable is copied inside an alpine container which eventually runs.
-* Start container using `docker run -p 81:5000 institutions-api`. 
-Point browser to `http://localhost:81/institutions` to get the ball rolling. 
-
-### Serverless.
-* Prerequisites.
-    * Up. https://up.docs.apex.sh.
-* [Up](https://up.docs.apex.sh/) can be used to quickly deploy this API as an AWS Lambda function.
-* While inside the project root, run `up` to deploy a version of our API to AWS Lambda. Proper AWS credentials for this to be configured for this though.
-
-<br />
 
 ## License.
 MIT.

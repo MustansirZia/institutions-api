@@ -77,16 +77,17 @@ This implementation can however be also used for a string that's located inside 
 <br />
 
 ## Deployment (Bonus)
-* Serverless.
-    * Prerequisites.
-        * Up. https://up.docs.apex.sh.
+### Serverless.
+* Prerequisites.
+    * Up. https://up.docs.apex.sh.
 * [Up](https://up.docs.apex.sh/) can be used to quickly deploy this API as an AWS Lambda function.
 * While inside the project root, run `up` to deploy a version of our API to AWS Lambda. Proper AWS credentials for this to be configured for this though.
 
 <br />
-* Docker.
-    * Prerequisites.
-        * Docker. https://docker.com.
+
+### Docker.
+* Prerequisites.
+    * Docker. https://docker.com.
 * [Docker](https://up.docs.apex.sh/) is already configured for this repository. Tu run it inside a docker container use these commands.
 * `docker build . -t institutions-api`. This will build the docker image and tag it as `institutions-api`. This does not need the Go runtime to be installed locally. Everything is first complied inside a golang base image container and then the executable is copied inside an alpine container which eventually runs.
 * `docker run -p 81:5000 institutions-api`. Point browser to `http://localhost:81/institutions` to get the ball rolling. 

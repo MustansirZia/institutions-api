@@ -64,6 +64,7 @@ This implementation can however be also used for a string that's located inside 
 * `git clone git@github.com:mustansirzia/institutions-api && cd institutions-api`.
 * Run this once `go mod verify`.
 * To start server locally. `go run main.go`. An HTTP Server is now live on `localhost:5000`.
+* To install `go install`. Then run `institutions-api`.
 
 ## Deployment (Bonus)
 * Serverless.
@@ -72,6 +73,7 @@ This implementation can however be also used for a string that's located inside 
 * [Up](https://up.docs.apex.sh/) can be used to quickly deploy this API as an AWS Lambda function.
 * While inside the project root, run `up` to deploy a version of our API to AWS Lambda. Proper AWS credentials for this to be configured for this though.
 
+<br />
 * Docker.
     * Prerequisites.
         * Docker. https://docker.com.
@@ -80,4 +82,4 @@ This implementation can however be also used for a string that's located inside 
 * `docker run -p 81:5000 institutions-api`. Point browser to `http://localhost:81/institutions` to get the ball rolling. 
 
 ## License.
-Unlicensed.
+MIT.

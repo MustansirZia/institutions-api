@@ -3,6 +3,5 @@
         "api/institutions.go": {
             "includeFiles": "data/json/*.json"
         }
-    },            
-    "includeFiles": "data/json/*.json"
+    }
 }

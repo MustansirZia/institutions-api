@@ -42,7 +42,7 @@ Then import in your own GO project like so:
 To search for all Indian colleges and universities around the world. As you can see the keyword
 can either be a prefix to a result or be somewhere inside the result itself. This more or less works like a text index.
 ```json
-GET http://localhost:5000/institutions?search=Kashmir&count=10
+GET http://localhost:5000/institutions?name=Kashmir&count=10
 
 [
   "University of Kashmir, Srinagar",
@@ -52,7 +52,9 @@ GET http://localhost:5000/institutions?search=Kashmir&count=10
   "KASHMIR PARADISE COLLEGE OF EDUCATION, BARAMULLAH",
   "KASHMIR LAW COLLEGE",
   "KASHMIR COLLEGE OF EDUCATION, BARAMULLAH",
-  "Azad Jammu and Kashmir University"
+  "Azad Jammu and Kashmir University",
+  ...
+  ...
 ]
 ```
 

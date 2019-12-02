@@ -34,7 +34,7 @@ func HandleHTTP(w http.ResponseWriter, r *http.Request) {
 		// Default count is 10.
 		countInt = 10
 	}
-	institutions, err := repository.GetInstitutions(string(name), countInt)
+	institutions, err := repository.GetInstitutions(name, countInt)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		writeErr(w, http.StatusInternalServerError, "Oops! Something bad happened.")

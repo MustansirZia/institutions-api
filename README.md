@@ -5,8 +5,6 @@
 
 > A RESTful API to query all colleges in India, universities in India and all international universities around the world using their name, a prefix of their name or any part of their name. This is not a wrapper over any third party service or dependency but instead houses all the data within itself and can act as a standalone microservice.
 
-<br />
-
 ## Use case.
 It can act as a backend service for an autocomplete input that searches for all colleges in India, universities in India and accompanied by all international universities.
 
@@ -70,10 +68,29 @@ This implementation can however be also used for a string that's located inside 
 ## Development.
 * Prerequisites. 
     * Golang (1.12). https://golang.org
-* `git clone git@github.com:mustansirzia/institutions-api && cd institutions-api`.
+* `git clone git@github.com:MustansirZia/institutions-api && cd institutions-api`.
 * Run this once `go mod verify`.
 * To start server locally. `go run main.go`. An HTTP Server is now live on `localhost:5000`.
 * To install `go install`. Then run `institutions-api`.
+* Can even be used as a library. `go get github.com/MustansirZia/institutions-api`.
+Then import in your own GO project like so:
+```go
+    import "github.com/mustansirzia/institutions-api/institutions"
+
+    func main() {	
+        repository = institutions.NewInstitutionRepository(
+            // Add the providers you need.
+            providers.NewIndianCollegesProvider(),
+            providers.NewWorldUniversitiesProvider(),
+            providers.NewIndianUniversitiesProvider(),
+        )
+        institutions, err := repository.GetInstitutions("Maryland", 10)
+        if err != nil {
+            log.Fatal(err)
+        }
+        fmt.Println(institutions)
+    }
+```
 
 <br />
 
@@ -82,8 +99,10 @@ This implementation can however be also used for a string that's located inside 
 * Prerequisites.
     * Docker. https://docker.com.
 * [Docker](https://up.docs.apex.sh/) is already configured for this repository. Tu run it inside a docker container use these commands.
-* `docker build . -t institutions-api`. This will build the docker image and tag it as `institutions-api`. This does not need the Go runtime to be installed locally. Everything is first complied inside a golang base image container and then the executable is copied inside an alpine container which eventually runs.
-* `docker run -p 81:5000 institutions-api`. Point browser to `http://localhost:81/institutions` to get the ball rolling. 
+* `docker build . -t institutions-api`. 
+This will build the docker image and tag it as `institutions-api`. This does not need the Go runtime to be installed locally. Everything is first complied inside a golang base image container and then the executable is copied inside an alpine container which eventually runs.
+* `docker run -p 81:5000 institutions-api`. 
+Point browser to `http://localhost:81/institutions` to get the ball rolling. 
 
 ### Serverless.
 * Prerequisites.

@@ -13,7 +13,7 @@ It can act as a backend service for an autocomplete input that searches for all 
     * Golang (1.12). https://golang.org
 * `git clone git@github.com:MustansirZia/institutions-api && cd institutions-api`.
 * Run this once `go mod verify`.
-* To start server locally. `go run main.go`. An HTTP Server is now live on `localhost:5000`.
+* To start server locally. `go run main.go`. Now hit the HTTP endpoint at http://localhost:5000/institutions`.
 * To install `go install`. Then run `institutions-api`.
 * Can even be used as a library. `go get github.com/MustansirZia/institutions-api`.
 Then import in your own GO project like so:

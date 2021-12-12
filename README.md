@@ -74,6 +74,14 @@ Point browser to `http://localhost:81/institutions` to get the ball rolling.
 * [Up](https://up.docs.apex.sh/) can be used to quickly deploy this API as an AWS Lambda function.
 * While inside the project root, run `up` to deploy a version of our API to AWS Lambda. Proper AWS credentials for this to be configured for this though.
 
+### Heroku.
+* Prerequisites.
+    * Heroku Account. https://heroku.com.
+* [Heroku](https://heroku.com) can be used to quickly deploy this API as well. This repository is Heroku friendly.
+* Fork this repository into your GitHub account.
+* Login into your heroku account and create a new project.
+* In the deploy tab connect your newly forked repository. (Pro tip: Enable automatic deploys from the master branch so heroku will redeploy each time you push a change to the repo's master branch)
+
 ## Codebase
 The API is written in [Golang (1.12)](https://golang.org/) as a [GO module](https://blog.golang.org/using-go-modules).
 

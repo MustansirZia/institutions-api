@@ -80,7 +80,7 @@ Point browser to `http://localhost:81/institutions` to get the ball rolling.
 * [Heroku](https://heroku.com) can be used to quickly deploy this API as well. This repository is Heroku friendly.
 * Fork this repository into your GitHub account.
 * Login into your heroku account and create a new project.
-* In the deploy tab connect your newly forked repository. (Pro tip: Enable automatic deploys from the master branch so heroku will redeploy each time you push a change to the repo's master branch)
+* In the deploy tab connect your newly forked repository and tap on "Deploy Branch". (Pro tip: Enable automatic deploys from the master branch so heroku will redeploy each time you push a change to the repo's master branch)
 
 ## Codebase
 The API is written in [Golang (1.12)](https://golang.org/) as a [GO module](https://blog.golang.org/using-go-modules).

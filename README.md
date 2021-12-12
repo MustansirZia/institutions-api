@@ -98,7 +98,7 @@ Here's the `init` function inside `institutions/institutions_http_handler.go`.
     }
 ```
 
-To faciliate additional JSON files a helper `jSONProvder` can be used. More on this inside `institutions/providers/json_provider.go`. All the three JSON files are loaded using this provider. 
+To faciliate additional JSON files a helper `jSONProvder` can be used. More on this inside `institutions/providers/json_provider.go`. All the three JSON files are loaded using this provider.
 
 ### How the data is queried? 
 Data that's loaded inside the memory is stored in a data structure called `Trie`. Here's a Wikipedia [article](https://en.wikipedia.org/wiki/Trie) that describes Tries. A Trie stores data as key-value pairs in the form of interconnected nodes and leaves whose position is based on a key they are associated with. Each node has descendants which share a common string prefix. That prefix string is associated with that particular node and thus using a particular prefix key can be mapped to multiple values, in a way. This way a number of institutions can be queried using a common prefix. 

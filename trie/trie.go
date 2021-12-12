@@ -23,7 +23,7 @@ type trie struct {
 func NewTrie() Trie {
 	return &trie{
 		originalTrie: originalTrie.New(),
-		uuidPool:     generateUUIDS(20),
+		uuidPool:     generateUUIDS(20, 3),
 	}
 }
 
@@ -78,10 +78,10 @@ func (t *trie) getRandomUUID() string {
 	return t.uuidPool[index]
 }
 
-func generateUUIDS(count int) []string {
+func generateUUIDS(count int, length int) []string {
 	uuids := make([]string, 0, count)
 	for i := 0; i < count; i++ {
-		uuids = append(uuids, uuid.NewV1().String())
+		uuids = append(uuids, uuid.NewV1().String()[:length])
 	}
 	return uuids
 }

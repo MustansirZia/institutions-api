@@ -3,6 +3,8 @@ package providers
 import (
 	"encoding/json"
 	"io/ioutil"
+	"os"
+	"path/filepath"
 )
 
 type NameExtractor func(data map[string]interface{}) string
@@ -21,7 +23,11 @@ func NewJSONProvider(jsonPath string,
 }
 
 func (p *jsonProvider) Provide() ([]string, error) {
-	bytes, err := ioutil.ReadFile(p.jsonPath)
+	wd, err := os.Getwd()
+	if err != nil {
+		return nil, err
+	}
+	bytes, err := ioutil.ReadFile(filepath.Join(wd, p.jsonPath))
 	if err != nil {
 		return nil, err
 	}

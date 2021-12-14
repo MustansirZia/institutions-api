@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/mustansirzia/institutions-api/institutions"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -16,8 +17,10 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/institutions", institutions.HandleHTTP)
 
+	corsEnabledMux := cors.Default().Handler(mux)
+
 	fmt.Printf("About to listen on %s!\n", addr)
-	if err := http.ListenAndServe(addr, mux); err != nil {
+	if err := http.ListenAndServe(addr, corsEnabledMux); err != nil {
 		log.Fatal(err)
 	}
 }
